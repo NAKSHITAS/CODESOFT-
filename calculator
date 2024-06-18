@@ -1,0 +1,62 @@
+from tkinter import *
+
+# Global expression for user input and entry widget
+expression = ""
+
+window = Tk()
+window.title("Calculator - Nakshita")
+window.configure(background="light pink")
+window.geometry("400x400")
+
+input_text = StringVar()
+
+def button_click(number):
+    global expression
+    expression += str(number)
+    input_text.set(expression)
+
+def button_clear():
+    global expression
+    expression = ""
+    input_text.set(expression)
+
+def button_equal():
+    global expression
+    try:
+        result = str(eval(expression))  # 'eval': Evaluate the string expression
+        input_text.set(result)
+        expression = result  # Preserve result for further calculations (optional)
+    except (SyntaxError, ZeroDivisionError) as e:
+        input_text.set("Error")
+
+# Create the text entry box for showing the expression
+expression_field = Entry(window, textvariable=input_text, font=('Arial', 18), bd=10, insertwidth=2, borderwidth=4)
+expression_field.grid(row=0, column=0, columnspan=4, sticky='nsew')
+
+# Common font settings for buttons
+button_font = ('Arial', 12)
+
+# Creating buttons
+buttons = [
+    ('7', 1, 0), ('8', 1, 1), ('9', 1, 2), ('+', 1, 3),
+    ('4', 2, 0), ('5', 2, 1), ('6', 2, 2), ('-', 2, 3),
+    ('1', 3, 0), ('2', 3, 1), ('3', 3, 2), ('*', 3, 3),
+    ('0', 4, 1), ('.', 4, 0), ('=', 4, 2), ('/', 4, 3),
+    ('Clear', 5, 0)
+]
+
+for (text, row, column) in buttons:
+    action = lambda x=text: button_click(x) if x not in ['=', 'Clear'] else (button_equal() if x == '=' else button_clear())
+    Button(window, text=text, fg='black', bg='grey', command=action, height=2, width=9, font=button_font).grid(row=row, column=column, sticky='nsew')
+
+# Set row and column weights to make the widgets responsive
+for i in range(6):
+    window.grid_rowconfigure(i, weight=1)
+for i in range(4):
+    window.grid_columnconfigure(i, weight=1)
+
+# Start main loop
+window.mainloop()
+
+
+
