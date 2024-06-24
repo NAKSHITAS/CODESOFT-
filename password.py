@@ -2,16 +2,15 @@ import random
 import pyperclip
 from tkinter import Tk, Label, Entry, IntVar, Checkbutton, Button, font
 
-
 window = Tk()
 window.title("Password Generator")
+window.configure( bg="#a5bfd0")
 
 
 font_style = font.Font(family="Arial", size=10)
 
-
 password_length_label = Label(
-    window, text="Password Length:", font=font_style, pady=5
+    window, text="Password Length:", font=font_style, pady=5,bg="#a5bfd0"
 )
 password_length_label.grid(row=0, column=0, sticky="W")  
 
@@ -27,7 +26,7 @@ char_types = {
 }
 for name, var in char_types.items():
     checkbox = Checkbutton(
-        window, text=name.capitalize(), variable=var, font=font_style
+        window, text=name.capitalize(), variable=var, font=font_style,bg="#a5bfd0"
     )
     checkbox.grid(row=1, column=list(char_types.keys()).index(name), sticky="W")
 
@@ -45,19 +44,19 @@ def generate_password():
                 elif name == "numbers":
                     char_set += "0123456789"
                 else:
-                    char_set += "!@#$%^&*()_-+={}[]|\:;'<,>.?/"
+                    char_set += "!@#$%^&*()_-+={[]}|\:;'<,>.?/"
         password = ''.join(random.choices(char_set, k=length))
         password_display.config(text=password)
     except ValueError:
         password_display.config(text="Invalid Length Input")
 
 generate_button = Button(
-    window, text="Generate Password", command=generate_password, font=font_style
+    window, text="Generate Password", command=generate_password
 )
 generate_button.grid(row=2, columnspan=2, pady=10)
 
 # Label to display generated password
-password_label = Label(window, text="Generated Password:", font=font_style, pady=5)
+password_label = Label(window, text="Generated Password:", font=font_style, pady=5, bg="#a5bfd0")
 password_label.grid(row=3, column=0, sticky="W")
 
 password_display = Label(window, text="")
@@ -76,3 +75,4 @@ copy_button.grid(row=4, columnspan=2, pady=5)
 
 
 window.mainloop()
+
